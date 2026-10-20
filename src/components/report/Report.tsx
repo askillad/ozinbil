@@ -6,6 +6,7 @@ import { Link, useRouter } from "@/i18n/navigation";
 import { useQuiz } from "@/store/quiz";
 import { useHydrated } from "@/store/useHydrated";
 import type { CareerReport } from "@/lib/ai/schema";
+import { MediaTwinCard } from "./MediaTwinCard";
 
 const reveal: Variants = {
   hidden: { opacity: 0, y: 24 },
@@ -116,6 +117,9 @@ function ReportBody({ report, demo, onRetake }: { report: CareerReport; demo: bo
           ))}
         </div>
       </m.div>
+
+      {/* Media twin — the shareable card */}
+      <MediaTwinCard twins={report.mediaTwins} archetype={report.archetype} />
 
       {/* Match scores */}
       <Section title={t("matches")}>

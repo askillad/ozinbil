@@ -40,6 +40,19 @@ export const careerReportSchema = z.object({
     title: z.string(),
     items: z.array(z.string()),
   }).describe("School: exam (ENT/UNT) subject combos and universities. Student: internships and specialization. Adult: transferable skills and switch strategy"),
+  mediaTwins: z
+    .array(
+      z.object({
+        name: z.string().describe("Character or person, e.g. 'Тони Старк', 'L (Death Note)', 'Стив Джобс'"),
+        source: z.string().describe("Where they come from, e.g. 'Аниме: Death Note' or 'История / Предпринимательство'"),
+        source_type: z
+          .enum(["movie", "series", "anime", "manga", "game", "book", "history", "modern"])
+          .describe("Used for the icon. 'history' = historical figure, 'modern' = living or recent public figure"),
+        similarity_reason: z.string().describe("2–3 sentences: why the user resembles them — thinking style, strengths, problem-solving approach"),
+        key_trait: z.string().describe("The main shared trait, 2–3 words, e.g. 'Стратегический аналитик'"),
+      }),
+    )
+    .describe("1–2 media twins; the first one is the closest match"),
   roadmap: z
     .array(
       z.object({
@@ -61,6 +74,7 @@ export function normalizeReport(r: CareerReport): CareerReport {
   return {
     ...r,
     traits: r.traits.map((t) => ({ ...t, score: clamp(t.score) })),
+    mediaTwins: r.mediaTwins.slice(0, 2),
     matches: r.matches
       .map((m) => ({ ...m, matchScore: clamp(m.matchScore) }))
       .sort((a, b) => b.matchScore - a.matchScore),

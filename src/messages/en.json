@@ -11,9 +11,18 @@
     "start": "Start the test",
     "duration": "≈ 10 minutes · {count} questions",
     "categories": {
-      "school": { "title": "School student", "desc": "Choosing a university, major and exam subjects" },
-      "student": { "title": "University student", "desc": "Internships, specialization, first job" },
-      "adult": { "title": "Career switcher", "desc": "Changing careers, building on your experience" }
+      "school": {
+        "title": "School student",
+        "desc": "Choosing a university, major and exam subjects"
+      },
+      "student": {
+        "title": "University student",
+        "desc": "Internships, specialization, first job"
+      },
+      "adult": {
+        "title": "Career switcher",
+        "desc": "Changing careers, building on your experience"
+      }
     }
   },
   "quiz": {
@@ -48,6 +57,14 @@
     "retake": "Retake",
     "empty": "Take the test first",
     "toTest": "Go to test",
-    "demo": "Demo mode: add ANTHROPIC_API_KEY to .env.local to get a real AI analysis."
+    "demo": "Demo mode: add ANTHROPIC_API_KEY to .env.local to get a real AI analysis.",
+    "twin": {
+      "badge": "Your media twin",
+      "trait": "Shared trait",
+      "also": "Also like you",
+      "share": "Share",
+      "copied": "Copied!",
+      "shareText": "My media twin is {name} ({trait}). Find yours on Pathwise:"
+    }
   }
 }

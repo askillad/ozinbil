@@ -45,6 +45,24 @@ export const mockReport: CareerReport = {
     title: "Next steps for you",
     items: ["UNT profile: Mathematics + Informatics", "Look at programs in IT and applied math with state grants", "Join a data olympiad or hackathon this year"],
   },
+  mediaTwins: [
+    {
+      name: "L (Death Note)",
+      source: "Anime: Death Note",
+      source_type: "anime",
+      similarity_reason:
+        "Like L, you solve problems by collecting small details until the pattern clicks. You trust logic over first impressions and enjoy puzzles other people give up on.",
+      key_trait: "Strategic analyst",
+    },
+    {
+      name: "Ada Lovelace",
+      source: "History / Science",
+      source_type: "history",
+      similarity_reason:
+        "Ada saw poetry in mathematics — the same mix of rigor and imagination shows up in your answers. You don't just compute, you imagine what the numbers could become.",
+      key_trait: "Poetic engineer",
+    },
+  ],
   roadmap: [
     { title: "Foundations", duration: "1–2 months", actions: ["Learn SQL basics", "Refresh statistics"], resources: ["Stepik: Interactive SQL trainer", "Khan Academy: Statistics"] },
     { title: "Tools", duration: "2–3 months", actions: ["Python + pandas", "Build 2 dashboards on open data"], resources: ["Kaggle Learn", "data.egov.kz open datasets"] },

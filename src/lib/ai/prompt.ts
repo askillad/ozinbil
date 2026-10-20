@@ -29,7 +29,14 @@ Principles:
 - The roadmap must be concrete and actionable: real platforms, programs, certificates and timeframes. No vague advice like "learn more".
 - Growth areas are phrased constructively, each with a practical tip.
 - Salaries: use the currency of Kazakhstan (₸) by default and give a realistic range for a junior-to-middle level.
-- Tone: warm, motivating, respectful, as if speaking to the person directly.`;
+- Tone: warm, motivating, respectful, as if speaking to the person directly.
+
+Media twins (mediaTwins):
+- Pick 1–2 vivid characters or well-known people whose way of thinking, approach to problems and character best match the user. Sources: films, series, anime, manga, video games, books, historical figures, or famous contemporaries (actors, entrepreneurs, scientists, athletes).
+- Match on how the user thinks and acts, not on profession or gender. If you give two, make them contrast (e.g. one fictional, one real) so the result feels rich.
+- Prefer recognizable names for a Kazakhstan / CIS / global audience. Use the commonly known name in the report language and add the original in parentheses when it helps, e.g. "L (Death Note)".
+- similarity_reason must point to specific answers ("like you, he…"). Keep it flattering but honest. Mention a shared blind spot only if it's gentle.
+- Antiheroes are fine when the trait is positive. Do not choose real people known mainly for crimes, violence or extremism, or active politicians. For school students, stick to age-appropriate sources.`;
 
 export function buildUserPrompt(locale: Locale, category: Category, answers: Answers): string {
   const lines = getQuestions(category).map((q, i) => {
