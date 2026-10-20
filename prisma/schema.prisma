@@ -1,0 +1,165 @@
+// PostgreSQL schema. Run: npx prisma migrate dev --name init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Locale {
+  ru
+  kk
+  en
+}
+
+enum Category {
+  school
+  student
+  adult
+}
+
+enum QuestionType {
+  scale
+  cards
+  text
+}
+
+enum AttemptStatus {
+  in_progress
+  analyzing
+  completed
+  failed
+}
+
+// ── Users ───────────────────────────────────────────────────────────────
+model User {
+  id        String    @id @default(cuid())
+  email     String?   @unique // null = anonymous guest until they sign up
+  name      String?
+  locale    Locale    @default(ru)
+  category  Category?
+  createdAt DateTime  @default(now())
+  attempts  Attempt[]
+}
+
+// ── Questions & localization ────────────────────────────────────────────
+// Texts live in *Translation tables: one row per language. Adding a 4th
+// language = inserting rows, no schema change.
+model Question {
+  id           String                @id @default(cuid())
+  slug         String                @unique // "analytical_1"
+  type         QuestionType
+  dimension    String // "analytical" | "creative" | ...
+  categories   Category[] // empty = shown to everyone
+  order        Int
+  maxSelect    Int? // for "cards"
+  optional     Boolean               @default(false)
+  isActive     Boolean               @default(true)
+  translations QuestionTranslation[]
+  options      QuestionOption[]
+  answers      Answer[]
+}
+
+model QuestionTranslation {
+  questionId String
+  locale     Locale
+  title      String
+  hint       String?
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@id([questionId, locale])
+}
+
+model QuestionOption {
+  id           String              @id @default(cuid())
+  questionId   String
+  slug         String // "math"
+  icon         String?
+  order        Int
+  question     Question            @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  translations OptionTranslation[]
+
+  @@unique([questionId, slug])
+}
+
+model OptionTranslation {
+  optionId String
+  locale   Locale
+  label    String
+  option   QuestionOption @relation(fields: [optionId], references: [id], onDelete: Cascade)
+
+  @@id([optionId, locale])
+}
+
+// ── Test attempts, answers, results ─────────────────────────────────────
+model Attempt {
+  id          String        @id @default(cuid())
+  userId      String?
+  category    Category
+  locale      Locale
+  status      AttemptStatus @default(in_progress)
+  startedAt   DateTime      @default(now())
+  completedAt DateTime?
+  user        User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+  answers     Answer[]
+  result      Result?
+
+  @@index([userId])
+}
+
+model Answer {
+  id         String   @id @default(cuid())
+  attemptId  String
+  questionId String
+  value      Json // 1–5 | ["math","physics"] | "free text"
+  createdAt  DateTime @default(now())
+  attempt    Attempt  @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  question   Question @relation(fields: [questionId], references: [id])
+
+  @@unique([attemptId, questionId])
+}
+
+model Result {
+  id         String        @id @default(cuid())
+  attemptId  String        @unique
+  model      String // AI model that produced the report
+  archetype  String
+  report     Json // full CareerReport JSON (see src/lib/ai/schema.ts)
+  createdAt  DateTime      @default(now())
+  attempt    Attempt       @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  matches    CareerMatch[]
+}
+
+// Denormalized top matches — for analytics ("which careers are matched most often")
+model CareerMatch {
+  id         String  @id @default(cuid())
+  resultId   String
+  title      String
+  matchScore Int
+  rank       Int
+  result     Result  @relation(fields: [resultId], references: [id], onDelete: Cascade)
+
+  @@index([title])
+}
+
+// ── Career catalogue (future: ground AI recommendations in curated data) ─
+model Profession {
+  id           String                  @id @default(cuid())
+  slug         String                  @unique
+  riasec       String // e.g. "IA" — Holland code
+  demand       String // high | medium | low
+  translations ProfessionTranslation[]
+}
+
+model ProfessionTranslation {
+  professionId String
+  locale       Locale
+  title        String
+  description  String
+  profession   Profession @relation(fields: [professionId], references: [id], onDelete: Cascade)
+
+  @@id([professionId, locale])
+}

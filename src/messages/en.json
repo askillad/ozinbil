@@ -1,0 +1,53 @@
+{
+  "meta": {
+    "title": "Pathwise — deep career guidance",
+    "description": "Analysis of your potential and skills, plus a personal roadmap into a profession"
+  },
+  "home": {
+    "badge": "Next-generation AI career guidance",
+    "title": "Find the career where you truly thrive",
+    "subtitle": "Not “tech vs. humanities”, but the full picture: inclinations, hard and soft skills, career match scores and a step-by-step plan.",
+    "chooseCategory": "Who are you?",
+    "start": "Start the test",
+    "duration": "≈ 10 minutes · {count} questions",
+    "categories": {
+      "school": { "title": "School student", "desc": "Choosing a university, major and exam subjects" },
+      "student": { "title": "University student", "desc": "Internships, specialization, first job" },
+      "adult": { "title": "Career switcher", "desc": "Changing careers, building on your experience" }
+    }
+  },
+  "quiz": {
+    "progress": "Question {current} of {total}",
+    "back": "Back",
+    "next": "Next",
+    "finish": "Get my report",
+    "skip": "Skip",
+    "textPlaceholder": "Write a couple of sentences…",
+    "chooseUpTo": "Choose up to {max}",
+    "scaleMin": "Not me at all",
+    "scaleMax": "Totally me",
+    "analyzing": "Analyzing your answers…",
+    "analyzingHint": "AI is matching your profile against hundreds of careers",
+    "error": "Couldn't get the analysis. Please try again.",
+    "retry": "Retry"
+  },
+  "result": {
+    "title": "Your profile",
+    "matches": "Matching careers",
+    "match": "match",
+    "why": "Why it fits",
+    "strengths": "Strengths",
+    "growth": "Growth areas",
+    "skills": "Skills",
+    "hard": "Hard skills",
+    "soft": "Soft skills",
+    "roadmap": "Roadmap",
+    "education": "Education",
+    "duration": "Duration",
+    "resources": "Resources",
+    "retake": "Retake",
+    "empty": "Take the test first",
+    "toTest": "Go to test",
+    "demo": "Demo mode: add ANTHROPIC_API_KEY to .env.local to get a real AI analysis."
+  }
+}
